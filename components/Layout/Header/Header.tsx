@@ -19,7 +19,7 @@ export const Header = () => {
           href="/"
           className="text-2xl font-bold tracking-tight text-text-main"
         >
-          AI<span className="text-brand">Video</span>
+          AI<span className="text-brand">Media</span>
         </Link>
 
         <Navigation navItems={navItems} />

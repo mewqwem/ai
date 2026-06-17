@@ -2,26 +2,29 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { X, Clock } from "lucide-react";
 import { Button } from "../ui/Button/Button";
 import { Product } from "@/data/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 
-// Modern modal component with integrated smooth mount animations
-export const ProductModal = ({
-  product,
-  onClose,
-}: {
-  product: Product;
-  onClose: () => void;
-}) => {
-  // Lock body scrolling and handle Escape key to close modal
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+export const ProductModal = ({ product }: { product: Product }) => {
+  const router = useRouter();
+
+  const handleClose = () => {
+    router.back();
+  };
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -30,7 +33,7 @@ export const ProductModal = ({
       document.body.style.overflow = "auto";
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose]);
+  }, []);
 
   return (
     <>
@@ -53,21 +56,19 @@ export const ProductModal = ({
 
       <div
         className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-6 animate-modal-bg"
-        onClick={onClose}
+        onClick={handleClose}
       >
         <div
           className="bg-[#121212] border border-white/10 rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col md:flex-row relative animate-modal-card shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Modal Close Button */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="absolute top-4 right-4 z-50 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full backdrop-blur-md border border-white/10 transition-colors cursor-pointer"
           >
             <X size={20} />
           </button>
 
-          {/* Left Column: Swiper or Video */}
           <div className="w-full md:w-1/2 h-[40vh] md:h-auto relative bg-black flex-shrink-0 group/swiper">
             {product.type === "video" ? (
               <video
@@ -104,7 +105,6 @@ export const ProductModal = ({
             )}
           </div>
 
-          {/* Right Column: Product Information */}
           <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
             <div className="inline-block bg-white/5 border border-white/10 text-gray-300 text-xs font-semibold px-3 py-1 rounded-full w-fit mb-4">
               {product.category}
