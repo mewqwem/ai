@@ -136,3 +136,87 @@ section {
     padding-bottom: 80px;
   }
 }
+.scroll-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  z-index: 1000;
+}
+
+.scroll-to-top:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+/* #region Swiper */
+/* Swiper Custom Overrides */
+.my-swiper {
+  --swiper-navigation-color: rgba(255, 255, 255, 0.9);
+  --swiper-navigation-size: 16px;
+}
+
+.my-swiper .swiper-button-next,
+.my-swiper .swiper-button-prev {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Показати стрілки при наведенні на контейнер */
+.group\/swiper:hover .swiper-button-next,
+.group\/swiper:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+/* Стилі для капсули з крапочками (завжди видимі на будь-якому фоні) */
+.my-swiper .swiper-pagination {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  padding: 4px 8px;
+  border-radius: 20px;
+  width: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%);
+  bottom: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  z-index: 30; /* Щоб крапочки були вище за градієнт */
+}
+
+.my-swiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  margin: 0 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Легка тінь для контрасту */
+  transition: all 0.3s ease;
+}
+
+.my-swiper .swiper-pagination-bullet-active {
+  background: #ffffff;
+  width: 16px;
+  border-radius: 4px;
+}
+/* #endregion */

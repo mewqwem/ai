@@ -1,14 +1,14 @@
 import React from "react";
 import { notFound } from "next/navigation";
+import Link from "next/link";
+import { Image, Video, Rotate3d } from "lucide-react";
 import { Product } from "@/data/types";
 
-// Importing the arrays from specific data files
 import { photoProducts } from "@/data/photo";
 import { videoProducts } from "@/data/video";
 import { spinProducts } from "@/data/3d-spin";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
 
-// Helper function to map the URL parameter to the correct data array and title
 const getCategoryData = (categorySlug: string) => {
   switch (categorySlug) {
     case "photo":
@@ -22,40 +22,67 @@ const getCategoryData = (categorySlug: string) => {
   }
 };
 
-// Component must be async to unwrap the params Promise in Next.js 15+
+const navigationItems = [
+  { slug: "photo", label: "Фото", icon: Image },
+  { slug: "video", label: "Відео", icon: Video },
+  { slug: "3d-spin", label: "3D", icon: Rotate3d },
+];
+
 export default async function CategoryPage({
   params,
 }: {
   params: Promise<{ category: string }>;
 }) {
-  // Await the params to safely extract the category slug
   const resolvedParams = await params;
-  const data = getCategoryData(resolvedParams.category);
+  const currentCategory = resolvedParams.category;
+  const data = getCategoryData(currentCategory);
 
-  // Trigger Next.js 404 page if the category slug doesn't match our data
   if (!data) {
     notFound();
   }
 
   return (
-    <main className="pt-32 pb-16 min-h-screen">
-      <section className="w-full">
-        <div className="container">
-          <div className="mb-12">
-            <h1 className="text-text-main mb-2">{data.title}</h1>
-            <p className="text-text-muted">
-              Оберіть пакет, який найкраще підходить для вашого бізнесу.
+    <section className="w-full">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col gap-6 mb-12">
+          <div>
+            <h1 className="text-3xl font-semibold text-white mb-2">
+              {data.title}
+            </h1>
+            <p className="text-gray-400">
+              Оберіть формат, який найкраще підходить для вашого бізнесу.
             </p>
           </div>
 
-          {/* Reusing the ProductCard component in a grid layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {data.products.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          <div className="inline-flex items-center gap-1 bg-white/5 border border-white/10 p-1.5 rounded-2xl w-max backdrop-blur-sm">
+            {navigationItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = currentCategory === item.slug;
+
+              return (
+                <Link
+                  key={item.slug}
+                  href={`/catalog/${item.slug}`}
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
+                    isActive
+                      ? "bg-white/10 text-white shadow-sm"
+                      : "text-gray-400 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <Icon size={18} />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
-      </section>
-    </main>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {data.products.map((product: Product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

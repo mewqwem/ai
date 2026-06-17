@@ -1,15 +1,13 @@
-// src/data/types.ts
-
-// Shared interface for all product categories
 export interface Product {
   id: string;
-  type: "video" | "photo";
+  pack?: string;
+  type: "photo" | "video" | "3d-spin";
   category: string;
   categorySlug: string;
-  mediaUrl: string;
+  mediaUrls: string[];
   title: string;
   description: string;
   price: number;
-  isStartingPrice: boolean;
+  isStartingPrice?: boolean;
   turnaroundTime: string;
 }
