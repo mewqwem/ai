@@ -82,7 +82,7 @@ h3 {
 }
 
 section {
-  padding-top: 40px;
+  padding-top: 120px;
   padding-bottom: 40px;
 }
 
@@ -106,7 +106,7 @@ section {
   }
 
   section {
-    padding-top: 60px;
+    padding-top: 120px;
     padding-bottom: 60px;
   }
 }
@@ -132,7 +132,7 @@ section {
   }
 
   section {
-    padding-top: 80px;
+    padding-top: 160px;
     padding-bottom: 80px;
   }
 }
@@ -220,3 +220,7 @@ section {
   border-radius: 4px;
 }
 /* #endregion */
+html.menu-open,
+html.menu-open body {
+  overflow: hidden !important;
+}
