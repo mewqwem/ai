@@ -11,5 +11,31 @@
     "feature2Desc": "Від тридцяти п'яти доларів за професійний ролик",
     "feature3Title": "Унікальність",
     "feature3Desc": "Сюжети які неможливо зняти на звичайну камеру"
+  },
+  "order": {
+    "titleDefault": "Замовити прорахунок",
+    "titleWithService": "Підтвердіть замовлення",
+    "subtitleDefault": "Залиште заявку, і ми підготуємо персональну пропозицію під ваш проєкт",
+    "subtitleWithService": "Перевірте деталі обраної послуги та залиште контакти — ми зв'яжемось з вами найближчим часом",
+    "nameLabel": "Ваше ім'я",
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@example.com",
+    "contactMethodLabel": "Зв'язатись через",
+    "contactValueLabelTelegram": "Telegram-нік",
+    "contactValueLabelInstagram": "Instagram-нік",
+    "contactValuePlaceholderTelegram": "@username",
+    "contactValuePlaceholderInstagram": "instagram_nick",
+    "namePlaceholder": "Наприклад, Олена",
+    "contactLabel": "Телефон або Telegram",
+    "contactPlaceholder": "+380... або @username",
+    "commentLabel": "Коментар (необов'язково)",
+    "commentPlaceholder": "Розкажіть більше про ваш проєкт",
+    "submitIdle": "Відправити заявку",
+    "submitLoading": "Відправка...",
+    "successTitle": "Дякуємо, заявку прийнято!",
+    "successText": "Ми зв'яжемось з вами найближчим часом для уточнення деталей.",
+    "successButton": "Залишити ще одну заявку",
+    "successCtaCatalog": "Перейти до каталогу",
+    "errorGeneric": "Не вдалося відправити заявку. Спробуйте ще раз або напишіть нам напряму в Telegram."
   }
 }
