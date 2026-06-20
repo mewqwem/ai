@@ -17,7 +17,8 @@ export const ProductModal = ({ product }: { product: Product }) => {
   const router = useRouter();
 
   const handleClose = () => {
-    router.back();
+    const category = product.categorySlug;
+    router.push(`/catalog/${category}`);
   };
 
   useEffect(() => {
