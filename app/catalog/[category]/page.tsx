@@ -8,6 +8,46 @@ import { photoProducts } from "@/data/photo";
 import { videoProducts } from "@/data/video";
 import { spinProducts } from "@/data/3d-spin";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
+import { Metadata } from "next";
+
+type Props = {
+  params: { category: string };
+};
+
+const categoryMeta: Record<string, { title: string; description: string }> = {
+  video: {
+    title:
+      "AI відеоролики для товарів — промо для Instagram та TikTok | AIMedia",
+    description:
+      "Динамічні промо-відео на основі фото вашого товару. Авто, взуття, косметика. Термін: 48 годин.",
+  },
+  photo: {
+    title: "AI фотографії товарів для магазинів | AIMedia",
+    description:
+      "Генеруємо AI-фото вашого товару в будь-яких локаціях і стилях для Instagram та маркетплейсів.",
+  },
+  "3d-spin": {
+    title: "3D-візуалізація товару 360° | AIMedia",
+    description:
+      "Обліт товару на 360 градусів на AI-фоні. Ефектна презентація без дорогої студії.",
+  },
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const meta = categoryMeta[params.category];
+
+  if (!meta) {
+    return {
+      title: "Каталог AI-послуг | AIMedia",
+      description: "Перегляньте приклади AI-реклами для вашого бізнесу.",
+    };
+  }
+
+  return {
+    title: meta.title,
+    description: meta.description,
+  };
+}
 
 const getCategoryData = (categorySlug: string) => {
   switch (categorySlug) {

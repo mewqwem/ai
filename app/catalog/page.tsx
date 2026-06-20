@@ -4,8 +4,9 @@ import { Metadata } from "next";
 import { CategoryCard } from "@/components/CategoryCard/CategoryCard";
 
 export const metadata: Metadata = {
-  title: "Каталог послуг | AI Відео",
-  description: "Оберіть напрямок: AI фото, AI відео або 3D обертання.",
+  title: "Каталог AI-послуг — відео, фото, 3D для товарів | AIMedia",
+  description:
+    "Перегляньте приклади AI-реклами: промо-відео, 3D-обертання товару на 360°, AI-фотографії продуктів. Вибирайте формат — і замовляйте.",
 };
 
 // Hardcoded categories with specific media types for video background support

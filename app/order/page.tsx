@@ -4,6 +4,13 @@ import { spinProducts } from "@/data/3d-spin";
 import { OrderForm } from "@/components/Order/OrderForm";
 import { ServicePreviewCard } from "@/components/Order/ServicePreviewCard";
 import uaLocale from "@/locales/ua.json";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Замовити AI-відео або фото — залишити заявку | AIMedia",
+  description:
+    "Залиште заявку на AIMedia — опишіть товар та ідею, і ми зв'яжемося з вами протягом кількох годин для обговорення та прорахунку вартості.",
+};
 
 // Об'єднаний список усіх послуг для пошуку за id з URL.
 // Якщо в проєкті вже є власний data/products.ts з таким же об'єднаним списком —
