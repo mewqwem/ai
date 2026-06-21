@@ -13,12 +13,55 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// TODO: якщо назва бренду інша — поміняй тільки тут, решта підхопиться сама
+const SITE_NAME = "AImedia";
+const SITE_URL = "https://aimedia.pp.ua";
+const SITE_DESCRIPTION =
+  "Кінематографічна AI-реклама та предметна фотографія для вашого бізнесу. Готовий контент за 24-72 години, у 10 разів дешевше за традиційну зйомку.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "AIMedia — AI реклама для бізнесу",
-    template: "%s | AIMedia",
+    default: `${SITE_NAME} — AI-фото та відео для бізнесу за 24-72 години`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: "AI-відео та фото для товарів за 48 годин",
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "AI фото товарів",
+    "генерація фото нейромережею",
+    "AI відео реклама",
+    "предметна фотографія штучний інтелект",
+    "фото для маркетплейсів",
+    "3D обертання товару",
+  ],
+  openGraph: {
+    title: `${SITE_NAME} — AI-фото та відео для бізнесу`,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    // TODO: додай реальний файл 1200x630px у public/og-image.jpg
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    locale: "uk_UA",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} — AI-фото та відео для бізнесу`,
+    description: SITE_DESCRIPTION,
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
 };
 
 export default function RootLayout({
@@ -27,7 +70,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="uk" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+      </head>
       <body>
         <Header />
         {children}
