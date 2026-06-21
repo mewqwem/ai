@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Layout/Header/Header";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 
 // TODO: якщо назва бренду інша — поміняй тільки тут, решта підхопиться сама
 const SITE_NAME = "AImedia";
-const SITE_URL = "https://aimedia.pp.ua";
+const SITE_URL = "https://aimedia.website";
 const SITE_DESCRIPTION =
   "Кінематографічна AI-реклама та предметна фотографія для вашого бізнесу. Готовий контент за 24-72 години, у 10 разів дешевше за традиційну зйомку.";
 
@@ -72,6 +73,16 @@ export default function RootLayout({
   return (
     <html lang="uk" className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
+        {/* Google Tag Manager - Injection of the main tracking script */}
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-TTFQBQTV');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
@@ -81,6 +92,15 @@ export default function RootLayout({
         />
       </head>
       <body>
+        {/* Google Tag Manager (noscript) - Fallback for users with disabled JavaScript */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-TTFQBQTV"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <Header />
         {children}
       </body>
