@@ -21,7 +21,7 @@ export const HeroSection = () => {
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source
-          src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
+          src="https://res.cloudinary.com/dwwvwzghm/video/upload/q_auto/f_auto/v1782128261/promo_qhckqi.mp4"
           type="video/mp4"
         />
       </video>

@@ -8,6 +8,28 @@
   --color-bg-card: var(--bg-card);
   --color-text-main: var(--text-main);
   --color-text-muted: var(--text-muted);
+
+  --animate-shimmer: shimmer 1.8s linear infinite;
+  --animate-skeleton-pulse: skeleton-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-12deg);
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 /* Base CSS variables for global reuse */

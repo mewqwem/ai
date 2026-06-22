@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { X, Clock } from "lucide-react";
@@ -16,9 +16,16 @@ import "swiper/css/navigation";
 export const ProductModal = ({ product }: { product: Product }) => {
   const router = useRouter();
 
+  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
+  const [loadedSlides, setLoadedSlides] = useState<Record<number, boolean>>({});
+
   const handleClose = () => {
     const category = product.categorySlug;
     router.push(`/catalog/${category}`);
+  };
+
+  const handleSlideLoad = (index: number) => {
+    setLoadedSlides((prev) => ({ ...prev, [index]: true }));
   };
 
   useEffect(() => {
@@ -72,16 +79,33 @@ export const ProductModal = ({ product }: { product: Product }) => {
 
           <div className="w-full md:w-1/2 h-[40vh] md:h-auto relative bg-black flex-shrink-0 group/swiper">
             {product.type === "video" ? (
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                controls
-                className="w-full h-full object-cover"
-              >
-                <source src={product.mediaUrls[0]} type="video/mp4" />
-              </video>
+              <>
+                {!isVideoLoaded && (
+                  <div className="absolute inset-0 z-10 overflow-hidden bg-neutral-800">
+                    <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-700/60 to-neutral-800 animate-skeleton-pulse" />
+                    <div
+                      className="absolute top-0 left-0 h-full w-1/2 animate-shimmer"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.16) 50%, transparent 100%)",
+                      }}
+                    />
+                  </div>
+                )}
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  onLoadedData={() => setIsVideoLoaded(true)}
+                  className={`w-full h-full object-cover transition-opacity duration-700 ${
+                    isVideoLoaded ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <source src={product.mediaUrls[0]} type="video/mp4" />
+                </video>
+              </>
             ) : (
               <Swiper
                 modules={[Pagination, Navigation]}
@@ -92,14 +116,31 @@ export const ProductModal = ({ product }: { product: Product }) => {
               >
                 {product.mediaUrls.map((url, index) => (
                   <SwiperSlide key={url}>
-                    <Image
-                      fill
-                      src={url}
-                      alt={`${product.title} - ${index + 1}`}
-                      className="object-cover"
-                      sizes="(max-w-768px) 100vw, 50vw"
-                      quality={100}
-                    />
+                    <div className="relative w-full h-full">
+                      {!loadedSlides[index] && (
+                        <div className="absolute inset-0 z-10 overflow-hidden bg-neutral-800">
+                          <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-700/60 to-neutral-800 animate-skeleton-pulse" />
+                          <div
+                            className="absolute top-0 left-0 h-full w-1/2 animate-shimmer"
+                            style={{
+                              background:
+                                "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.16) 50%, transparent 100%)",
+                            }}
+                          />
+                        </div>
+                      )}
+                      <Image
+                        fill
+                        src={url}
+                        alt={`${product.title} - ${index + 1}`}
+                        onLoad={() => handleSlideLoad(index)}
+                        className={`object-cover transition-opacity duration-700 ${
+                          loadedSlides[index] ? "opacity-100" : "opacity-0"
+                        }`}
+                        sizes="(max-w-768px) 100vw, 50vw"
+                        quality={100}
+                      />
+                    </div>
                   </SwiperSlide>
                 ))}
               </Swiper>

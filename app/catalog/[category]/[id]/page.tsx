@@ -54,9 +54,5 @@ export default async function FullProductPage({ params }: Props) {
     notFound();
   }
 
-  return (
-    <main className="min-h-screen pt-32 pb-16">
-      <ProductModal product={product} />
-    </main>
-  );
+  return <ProductModal product={product} />;
 }
