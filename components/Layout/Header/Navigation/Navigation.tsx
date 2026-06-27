@@ -1,3 +1,4 @@
+// src/components/Navigation/Navigation.tsx
 import React from "react";
 import Link from "next/link";
 
@@ -12,7 +13,7 @@ export const Navigation: React.FC<NavigationProps> = ({ navItems }) => {
         <Link
           key={item.href}
           href={item.href}
-          className="text-gray-600 hover:text-gray-900 transition-colors font-medium text-sm"
+          className="text-text-muted hover:text-text-main transition-colors font-medium text-sm"
         >
           {item.label}
         </Link>

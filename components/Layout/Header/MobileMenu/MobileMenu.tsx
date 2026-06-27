@@ -78,7 +78,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ navItems }) => {
   const panelRef = useRef<HTMLDivElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
 
-  // Lock scroll on both html and body
+  // UTILS: Lock scroll on both html and body to prevent background scrolling
   useEffect(() => {
     if (isOpen) {
       document.documentElement.style.overflow = "hidden";
@@ -93,7 +93,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ navItems }) => {
     };
   }, [isOpen]);
 
-  // Close when clicking outside the panel (not on burger)
+  // HANDLER: Close menu when clicking outside the panel (excluding burger button)
   useEffect(() => {
     if (!isOpen) return;
     const handle = (e: PointerEvent) => {
@@ -111,9 +111,9 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ navItems }) => {
   const close = () => setIsOpen(false);
 
   return (
-    // Wrapper gets z-index context above the header (header is z-50 = 50)
+    // UI: Wrapper gets z-index context above the header (header is z-50)
     <div className="md:hidden" style={{ position: "relative", zIndex: 60 }}>
-      {/* Burger button */}
+      {/* UI: Burger button */}
       <button
         ref={burgerRef}
         onClick={() => setIsOpen((prev) => !prev)}
@@ -136,32 +136,32 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ navItems }) => {
         </span>
       </button>
 
-      {/* Backdrop — z-index above header (z-50 = 50), so header is blocked too */}
+      {/* UI: Backdrop — z-index above header */}
       <div
         aria-hidden="true"
         style={{ zIndex: 61 }}
-        className={`fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-overlay-dark/70 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       />
 
-      {/* Slide-in panel — above backdrop */}
+      {/* UI: Slide-in panel — positioned above backdrop */}
       <div
         ref={panelRef}
         style={{ zIndex: 62, height: "100svh" }}
         className={`
           fixed top-0 right-0 w-72
-          bg-[#111827]/95 backdrop-blur-md
-          border-l border-white/10
+          bg-bg-panel/95 backdrop-blur-md
+          border-l border-surface-inverse/10
           flex flex-col
           transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
       >
-        {/* Top: logo + close */}
-        <div className="flex items-center justify-between px-6 h-20 border-b border-white/10 shrink-0">
+        {/* UI: Top section with logo and close button */}
+        <div className="flex items-center justify-between px-6 h-20 border-b border-surface-inverse/10 shrink-0">
           <Link
             href="/"
             onClick={close}
@@ -171,21 +171,21 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ navItems }) => {
           </Link>
           <button
             onClick={close}
-            className="p-1.5 rounded-md text-text-main/50 hover:text-text-main hover:bg-white/5 transition-all"
+            className="p-1.5 rounded-md text-text-main/50 hover:text-text-main hover:bg-surface-inverse/5 transition-all"
             aria-label="Закрити меню"
           >
             <X size={20} />
           </button>
         </div>
 
-        {/* Nav links — scrollable if many items */}
+        {/* UI: Navigation links — scrollable if content overflows */}
         <nav className="flex flex-col px-6 pt-6 gap-1 flex-1 overflow-y-auto">
           {navItems.map((item, index) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={close}
-              className="group flex items-center gap-3 py-3.5 text-base font-medium text-text-main/80 hover:text-brand transition-colors border-b border-white/5 last:border-0"
+              className="group flex items-center gap-3 py-3.5 text-base font-medium text-text-main/80 hover:text-brand transition-colors border-b border-surface-inverse/5 last:border-0"
               style={{ transitionDelay: isOpen ? `${index * 50}ms` : "0ms" }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-brand/40 group-hover:bg-brand transition-colors shrink-0" />
@@ -194,8 +194,8 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ navItems }) => {
           ))}
         </nav>
 
-        {/* Bottom: CTA + socials */}
-        <div className="px-6 pb-8 pt-4 flex flex-col gap-5 border-t border-white/10 shrink-0">
+        {/* UI: Bottom section with CTA and social links */}
+        <div className="px-6 pb-8 pt-4 flex flex-col gap-5 border-t border-surface-inverse/10 shrink-0">
           <Button
             href="/order"
             variant="primary"
@@ -213,7 +213,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ navItems }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 text-text-main/60 hover:text-brand hover:border-brand/40 transition-all"
+                className="w-9 h-9 flex items-center justify-center rounded-full border border-surface-inverse/10 text-text-main/60 hover:text-brand hover:border-brand/40 transition-all"
               >
                 {svg}
               </a>

@@ -1,5 +1,6 @@
 // src/components/sections/HeroSection.tsx
 import React from "react";
+import Image from "next/image";
 import uaLocale from "../../locales/ua.json";
 import { Button } from "../ui/Button/Button";
 
@@ -7,32 +8,33 @@ export const HeroSection = () => {
   const t = uaLocale.home;
 
   return (
-    // The section itself takes full width and height, acting as the wrapper
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/60 z-10"></div>
-
-      {/* Full-width background video stretching across the entire section */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source
-          src="https://res.cloudinary.com/dwwvwzghm/video/upload/q_auto/f_auto/v1782128261/promo_qhckqi.mp4"
-          type="video/mp4"
+    // UI: The section takes full width and height, acting as the relative wrapper for absolute media
+    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-bg-dark">
+      {/* --- HERO IMAGE BACKGROUND --- */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/PhotoData/Mora-images/9.png" // Path to your hero image in the public folder
+          alt="AIMedia Production Hero Background"
+          fill
+          priority // Tells Next.js to load this image immediately (LCP optimization)
+          className="object-cover"
+          sizes="100vw"
+          quality={90}
         />
-      </video>
+        {/* UI: Overlay to guarantee high text contrast and readability */}
+        <div className="absolute inset-0 bg-bg-dark/40 backdrop-blur-[2px]" />
+      </div>
+      {/* ----------------------------- */}
 
       {/* The container is placed INSIDE to restrict only the text and buttons width */}
       <div className="container relative z-20 flex flex-col items-center text-center px-4 pt-20">
-        <h1 className="text-text-main mb-6 max-w-4xl drop-shadow-lg">
+        {/* UI: Title uses main semantic text token */}
+        <h1 className="text-text-main mb-6 max-w-4xl drop-shadow-sm">
           {t.title}
         </h1>
 
-        <p className="text-gray-300 mb-10 max-w-2xl text-lg md:text-xl drop-shadow-md">
+        {/* UI: Subtitle shifted from hardcoded text-gray-300 to semantic text-text-muted */}
+        <p className="text-text-muted mb-10 max-w-2xl text-lg md:text-xl drop-shadow-sm">
           {t.subtitle}
         </p>
 

@@ -11,7 +11,7 @@ import { ProductCard } from "@/components/ProductCard/ProductCard";
 import { Metadata } from "next";
 
 type Props = {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 };
 
 const categoryMeta: Record<string, { title: string; description: string }> = {
@@ -34,7 +34,8 @@ const categoryMeta: Record<string, { title: string; description: string }> = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const meta = categoryMeta[params.category];
+  const { category } = await params;
+  const meta = categoryMeta[category];
 
   if (!meta) {
     return {
@@ -68,11 +69,7 @@ const navigationItems = [
   { slug: "3d-spin", label: "3D", icon: Rotate3d },
 ];
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: Promise<{ category: string }>;
-}) {
+export default async function CategoryPage({ params }: Props) {
   const resolvedParams = await params;
   const currentCategory = resolvedParams.category;
   const data = getCategoryData(currentCategory);

@@ -1,3 +1,4 @@
+// app/catalog/[category]/@modal/(.)[id]/page.tsx
 import React from "react";
 import { notFound } from "next/navigation";
 import { photoProducts } from "@/data/photo";
@@ -10,6 +11,10 @@ const getProductById = (id: string) => {
   return allProducts.find((p) => p.id === id);
 };
 
+// This file only ever renders inside the @modal parallel route slot —
+// i.e. only when navigation was intercepted from the catalog page.
+// It renders the overlay version (ProductModal). The standalone
+// [id]/page.tsx renders ProductContent directly, with no overlay.
 export default async function InterceptedProductModal({
   params,
 }: {

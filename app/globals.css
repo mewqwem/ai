@@ -8,6 +8,14 @@
   --color-bg-card: var(--bg-card);
   --color-text-main: var(--text-main);
   --color-text-muted: var(--text-muted);
+  --color-border-subtle: var(--border-subtle);
+  --color-overlay-scrim: var(--overlay-scrim);
+  --color-overlay-dark: var(--overlay-dark);
+  --color-bg-panel: var(--bg-panel);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-overlay-dark: var(--overlay-dark);
+  --color-bg-surface-dark: var(--bg-surface-dark);
+  --color-danger: var(--danger);
 
   --animate-shimmer: shimmer 1.8s linear infinite;
   --animate-skeleton-pulse: skeleton-pulse 2.5s ease-in-out infinite;
@@ -32,14 +40,26 @@
   }
 }
 
-/* Base CSS variables for global reuse */
+/* Base CSS variables — light theme */
 :root {
-  --brand: #2563eb;
-  --brand-hover: #1d4ed8;
-  --bg-dark: #111827;
-  --bg-card: #1f2937;
-  --text-main: #ffffff;
-  --text-muted: #9ca3af;
+  --brand: #3b82f6;
+  --brand-hover: #2563eb;
+  --bg-dark: #ffffff;
+  --bg-card: #f4f4f5;
+  --text-main: #0a0e14;
+  --text-muted: #6b7280;
+  /* New tokens needed for a light theme: subtle borders and scrims
+     that used to rely on white/black opacity, which only works on dark bg */
+  --border-subtle: rgba(10, 14, 20, 0.1);
+  --overlay-scrim: rgba(255, 255, 255, 0.6);
+  --overlay-dark: #000000;
+  --bg-surface-dark: #121212;
+  --surface-inverse: #ffffff;
+
+  --overlay-dark: #000000;
+  --bg-panel: #111827;
+
+  --danger: #ef4444;
 }
 
 body {
@@ -49,6 +69,9 @@ body {
 
 html {
   height: 100%;
+  /* Force light UI controls (scrollbar, inputs) regardless of system theme,
+     since the site itself is light. Remove the old dark color-scheme media query. */
+  color-scheme: light;
 }
 
 html,
@@ -62,19 +85,12 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
 /* --- Base Typography Styles --- */
 h1 {
   font-size: 28px;
   line-height: 1.2;
   font-weight: 800;
   letter-spacing: -0.02em;
-  /* Updated to use CSS variable for dark theme */
   color: var(--text-main);
 }
 
@@ -83,14 +99,12 @@ h2 {
   line-height: 1.3;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--text-main);
 }
 
 h3 {
   font-size: 18px;
   line-height: 1.4;
   font-weight: 600;
-  /* Using muted color for visual hierarchy */
   color: var(--text-muted);
 }
 
@@ -158,13 +172,14 @@ section {
     padding-bottom: 80px;
   }
 }
+
 .scroll-to-top {
   position: fixed;
   bottom: 40px;
   right: 40px;
   width: 50px;
   height: 50px;
-  background-color: #007bff;
+  background-color: var(--brand);
   color: white;
   border: none;
   border-radius: 50%;
@@ -173,7 +188,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(10, 14, 20, 0.15);
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -181,7 +196,7 @@ section {
 }
 
 .scroll-to-top:hover {
-  background-color: #0056b3;
+  background-color: var(--brand-hover);
   transform: scale(1.1);
 }
 
@@ -225,14 +240,14 @@ section {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  z-index: 30; /* Щоб крапочки були вище за градієнт */
+  z-index: 30;
 }
 
 .my-swiper .swiper-pagination-bullet {
   background: rgba(255, 255, 255, 0.4);
   opacity: 1;
   margin: 0 !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Легка тінь для контрасту */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
 }
 
@@ -242,6 +257,7 @@ section {
   border-radius: 4px;
 }
 /* #endregion */
+
 html.menu-open,
 html.menu-open body {
   overflow: hidden !important;

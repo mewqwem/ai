@@ -32,7 +32,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ defaultService }) => {
   const t = uaLocale.order;
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
-  // Фіксуємо момент рендеру форми один раз — використовується для анти-спам перевірки
+  // SECURITY: Timestamp used on server side for anti-spam detection
   const [formRenderedAt] = useState(() => Date.now());
 
   const {
@@ -76,7 +76,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ defaultService }) => {
 
   if (status === "success") {
     return (
-      <div className="bg-bg-card border border-white/10 rounded-2xl p-8 text-center">
+      // UI: Success card uses semantic background and border tokens
+      <div className="bg-bg-card border border-border-subtle rounded-2xl p-8 text-center">
         <div className="text-4xl mb-4">✅</div>
         <h3 className="text-text-main mb-2">{t.successTitle}</h3>
         <p className="text-text-muted mb-6">{t.successText}</p>
@@ -95,15 +96,16 @@ export const OrderForm: React.FC<OrderFormProps> = ({ defaultService }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-bg-card border border-white/10 rounded-2xl p-6 md:p-8 space-y-5"
+      // UI: Form card layout with semantic layout tokens
+      className="bg-bg-dark border border-border-subtle rounded-2xl p-6 md:p-8 space-y-5 shadow-sm"
     >
-      {/* Приховані поля з даними обраної послуги */}
+      {/* Hidden input fields containing selected service meta-data */}
       <input type="hidden" {...register("serviceId")} />
       <input type="hidden" {...register("serviceTitle")} />
       <input type="hidden" {...register("servicePrice")} />
       <input type="hidden" {...register("formRenderedAt")} />
 
-      {/* Honeypot — видимий ботам у DOM, прихований від людей і скрінрідерів */}
+      {/* SECURITY: Honeypot field visible to bots but hidden from real users */}
       <div
         className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden"
         aria-hidden="true"
@@ -126,10 +128,10 @@ export const OrderForm: React.FC<OrderFormProps> = ({ defaultService }) => {
           {...register("name")}
           type="text"
           placeholder={t.namePlaceholder}
-          className="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-text-main placeholder:text-text-muted/60 focus:outline-none focus:border-brand transition-colors"
+          className="w-full bg-bg-card border border-border-subtle rounded-lg px-4 py-3 text-text-main placeholder:text-text-muted/60 focus:outline-none focus:border-brand transition-colors"
         />
         {errors.name && (
-          <p className="text-red-400 text-sm mt-1.5">{errors.name.message}</p>
+          <p className="text-danger text-sm mt-1.5">{errors.name.message}</p>
         )}
       </div>
 
@@ -141,10 +143,10 @@ export const OrderForm: React.FC<OrderFormProps> = ({ defaultService }) => {
           {...register("email")}
           type="email"
           placeholder={t.emailPlaceholder}
-          className="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-text-main placeholder:text-text-muted/60 focus:outline-none focus:border-brand transition-colors"
+          className="w-full bg-bg-card border border-border-subtle rounded-lg px-4 py-3 text-text-main placeholder:text-text-muted/60 focus:outline-none focus:border-brand transition-colors"
         />
         {errors.email && (
-          <p className="text-red-400 text-sm mt-1.5">{errors.email.message}</p>
+          <p className="text-danger text-sm mt-1.5">{errors.email.message}</p>
         )}
       </div>
 
@@ -158,8 +160,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ defaultService }) => {
               key={method.value}
               className={`cursor-pointer px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
                 contactMethod === method.value
-                  ? "bg-brand border-brand text-text-main"
-                  : "bg-black/30 border-white/10 text-text-muted hover:border-white/30"
+                  ? "bg-brand border-brand text-white"
+                  : "bg-bg-card border-border-subtle text-text-muted hover:border-text-muted/40"
               }`}
             >
               <input
@@ -189,10 +191,10 @@ export const OrderForm: React.FC<OrderFormProps> = ({ defaultService }) => {
                 ? t.contactValuePlaceholderTelegram
                 : t.contactValuePlaceholderInstagram
             }
-            className="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-text-main placeholder:text-text-muted/60 focus:outline-none focus:border-brand transition-colors"
+            className="w-full bg-bg-card border border-border-subtle rounded-lg px-4 py-3 text-text-main placeholder:text-text-muted/60 focus:outline-none focus:border-brand transition-colors"
           />
           {errors.contactValue && (
-            <p className="text-red-400 text-sm mt-1.5">
+            <p className="text-danger text-sm mt-1.5">
               {errors.contactValue.message}
             </p>
           )}
@@ -207,17 +209,15 @@ export const OrderForm: React.FC<OrderFormProps> = ({ defaultService }) => {
           {...register("comment")}
           rows={4}
           placeholder={t.commentPlaceholder}
-          className="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-text-main placeholder:text-text-muted/60 focus:outline-none focus:border-brand transition-colors resize-none"
+          className="w-full bg-bg-card border border-border-subtle rounded-lg px-4 py-3 text-text-main placeholder:text-text-muted/60 focus:outline-none focus:border-brand transition-colors resize-none"
         />
         {errors.comment && (
-          <p className="text-red-400 text-sm mt-1.5">
-            {errors.comment.message}
-          </p>
+          <p className="text-danger text-sm mt-1.5">{errors.comment.message}</p>
         )}
       </div>
 
       {status === "error" && serverError && (
-        <p className="text-red-400 text-sm text-center">{serverError}</p>
+        <p className="text-danger text-sm text-center">{serverError}</p>
       )}
 
       <Button

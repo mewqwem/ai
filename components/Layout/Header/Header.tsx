@@ -12,8 +12,8 @@ const navItems = [
 
 export const Header = () => {
   return (
-    // Updated header background to match dark theme with blur
-    <header className="fixed top-0 left-0 w-full z-50 bg-bg-dark/80 backdrop-blur-md border-b border-white/10">
+    // UI: Header background uses semantic dark theme token with blur
+    <header className="fixed top-0 left-0 w-full z-50 bg-bg-dark/80 backdrop-blur-md border-b border-surface-inverse/10">
       <div className="container h-20 flex items-center justify-between">
         <Link
           href="/"

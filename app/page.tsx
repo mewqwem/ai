@@ -3,6 +3,8 @@ import React from "react";
 import { Metadata } from "next";
 import css from "./page.module.css";
 import { HeroSection } from "@/components/HeroSection/HeroSection";
+import { ProcessSection } from "@/components/ProcessSection/ProcessSection";
+import { BeforeAfterSection } from "@/components/BeforeAfterSection/BeforeAfterSection";
 
 export const metadata: Metadata = {
   title: "AI Відео для Бізнесу | Швидкий продакшн",
@@ -20,6 +22,8 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection />
+      <ProcessSection />
+      <BeforeAfterSection />
     </main>
   );
 }
